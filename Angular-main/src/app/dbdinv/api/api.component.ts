@@ -35,6 +35,7 @@ export class ApiComponent implements OnInit {
     ) { }
     
   ngOnInit(): void {
+    document.getElementById('loader')!.style.display = 'block'
     this.getApiData();
     this.editForm = this.fb.group({
       id: [''],
@@ -53,16 +54,12 @@ export class ApiComponent implements OnInit {
         }       
      ); 
      function hideloader() {
-      console.log('testing')
-      // Setting display of spinner
-      // element to none
-      document.getElementById('loading')!.hidden = true;
-      console.log('testing1')
+        document.getElementById('loader')!.style.display = 'none'
   }  
    }
 
 
-   openEdit(targetModal:any, api: Api) {
+   openEdit(targetModal:any, api: Api): void {
     this.modalService.open(targetModal, {
       backdrop: 'static',
       size: 'md'

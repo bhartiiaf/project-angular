@@ -13,6 +13,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiComponent } from './api/api.component';
+import { HotLinksComponent } from './hot-links/hot-links.component';
 
 
 
@@ -20,7 +21,8 @@ import { ApiComponent } from './api/api.component';
   declarations: [
     AppComponent,
     DashboardInventory,
-    ApiComponent
+    ApiComponent,
+    HotLinksComponent
   ],
   imports: [
     BrowserModule,
