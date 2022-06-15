@@ -1,0 +1,122 @@
+<div>
+    <h1>Current Deployments Inventory</h1>
+    <h2 style="display: inline;">Deployments List</h2>
+    <a class="toggler-text" (click)="togglingDb()" *ngIf="!toggleDb">[show]</a>
+    <a class="toggler-text" (click)="togglingDb()" *ngIf="toggleDb">[hide]</a>
+      <div *ngIf="toggleDb">
+        <br>
+        <table border-style="solid">
+          <thead>
+            <tr>
+              <th width="150" class="not-editable"><b>Abbreviation</b></th>
+              <th width="150" class="not-editable"><b>DNS Hostname</b></th>
+                <th width="400" class="not-editable"><b>Description</b></th>
+                <th width="120" class="not-editable"><b>ES Version</b></th>
+          <!-- <th>Source IP Addresses</th> -->
+              <th width="120" class="not-editable"><b>Main Deployment</b></th>
+              <th width="120" class="not-editable"><b>Assets Quantity</b></th>
+              <th class="not-editable"><b>RMQ Certificate S3 Location</b></th>
+              <th class="not-editable"><b>RMQ Key S3 Location</b></th>
+              <th width="120" class="not-editable"><b>Delete Deployment</b></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of working_inv; index as i">
+              <td class="not-editable"><b>{{x.abbrv}}</b></td>
+              <td contenteditable (blur)="editRow($event,i,'dns_hostname')" >{{x.dns_hostname}}</td>
+                <td contenteditable (blur)="editRow($event,i,'description')" >{{x.description}}</td>
+                <td>
+                 <select (change)="editRow($event,i,'total_ver')">
+                   <option *ngFor="let z of esVersions" [ngValue]="z" [selected]="x.es_ver+'.'+x.es_minor_ver+'.'+x.es_patch_ver==z">{{z}}</option>
+                 </select>
+                </td>
+                <!-- <td><div *ngFor="let y of x.source_ips">{{y}}</div></td> -->
+                <td>
+                 <select (change)="editRow($event,i,'main_deployment')">
+                   <option *ngFor="let z of boolOptions" [ngValue]="z" [selected]="x.main_deployment == false">{{z}}</option>
+                 </select>
+                </td>
+              <td contenteditable (blur)="editRow($event,i,'assets_quantity')" >{{x.assets_quantity}}</td>
+              <td contenteditable (blur)="editRow($event,i,'rabbitmq_crt')" ><div class="divtd">{{x.rabbitmq_crt}}</div></td>
+              <td contenteditable (blur)="editRow($event,i,'rabbitmq_key')" ><div class="divtd">{{x.rabbitmq_key}}</div></td>
+                <td><a class="del-block" id="remove" (click)="delRow(x)"><b>Delete</b></a></td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <!-- <button (click)="addEntry()">Save</button> -->
+        <button class="larger-button" type="submit" (click)="saveEntries()">Save</button>
+      </div>
+  </div>
+  <br>
+  <div>
+    <h2 style="display: inline;">New Deployment Form</h2>
+    <a class="toggler-text" (click)="togglingForm()" *ngIf="!toggleForm">[show]</a>
+    <a class="toggler-text" (click)="togglingForm()" *ngIf="toggleForm">[hide]</a>
+    <form *ngIf="toggleForm" [formGroup]="newAgencyForm" (ngSubmit)="addSubmit()">
+      <br>
+      <div>
+        <label for="abbrv">
+          Agency Abbreviation 
+        </label>
+        <input id="abbrv" type="text" formControlName="abbrv" required>
+      </div>
+      <div>
+        <label for="dns_hostname">
+          Agency DNS Hostname 
+        </label>
+        <input id="dns_hostname" type="text" formControlName="dns_hostname" required>
+      </div>
+      <div>
+        <label for="description">
+          Agency Abbreviation Description 
+        </label>
+        <input id="description" type="text" formControlName="description" required>
+      </div>
+      <div>
+        <label for="assets_quantity">
+          Assets Quantity
+        </label>
+        <input id="assets_quantity" type="number" formControlName="assets_quantity" required>
+      </div>
+      <div>
+        <label for="main_deployment">
+          Main Deployment (Public Access Enabled)
+        </label>
+        <select formControlName="main_deployment">
+          <option *ngFor="let r of boolOptions" [ngValue]="r">{{r}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="main_deployment">
+          Agency Dashboard ES Version
+        </label>
+        <select formControlName="es_total_ver">
+          <option *ngFor="let n of esVersions" [ngValue]="n">{{n}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="rabbitmq_crt">
+          RabbitMQ Internal Certificate (Optional)
+        </label>
+        <input id="rabbitmq_crt" type="text" formControlName="rabbitmq_crt">
+        <label>
+          format: s3_bucket_name/certificate/location/under/s3.pem
+        </label>
+      </div>
+      <div>
+        <label for="rabbitmq_key">
+          RabbitMQ Internal Key (Optional)
+        </label>
+        <input id="rabbitmq_key" type="text" formControlName="rabbitmq_key">
+        <label>
+          format: s3_bucket_name/key/location/under/s3.pem
+        </label>
+      </div>
+      <br>
+      <div>
+        <button class="larger-button" type="submit">Add</button>
+      </div>
+    </form>
+  </div>
+  

@@ -1,0 +1,126 @@
+
+<div class="container">
+    <br />
+    <h2 align="center">Manage the EC2 Instance</h2>
+    <hr>
+    
+     <p style="display: flex;">
+                  <select class="form-select form-select-lg w-25 bg-primary text-white" (change)="startAll($event)">
+                    <option disabled selected>Start All</option>
+                    <option value="all">All</option>
+                    <option value="Tigi">Tags-ApplicationName:Tigi</option>
+                    <option value="ECE">Tags-ApplicationName:ECE</option>
+                    </select> &nbsp;&nbsp;
+                    <select class="form-select form-select-lg w-25 bg-primary text-white" (change)="stopAll($event)">
+                      <option disabled selected>Stop All</option>
+                      <option value="all">All</option>
+                      <option value="Tigi">Tags-ApplicationName:Tigi</option>
+                      <option value="ECE">Tags-ApplicationName:ECE</option>
+                      </select> &nbsp;&nbsp;
+                  <!--
+                    <button class="btn btn-primary" (click)="startAllInstance()">Start All</button> &nbsp;
+                    <button class="btn btn-primary" (click)="stopAllInstance()">Stop All</button> &nbsp;&nbsp;
+                  -->
+                  <button  class="btn btn-success" (click)="refreshPage()">Refresh</button>
+                  </p>
+                  <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" >
+                      <span class="sr-only" id="loading"></span>
+                    </div>
+                  </div><br>
+    <table class="table table-bordered table-striped" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Tag(ApplicationName)</th>
+                <th>Current State</th>
+                <th>Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let api of apis">
+            <td><span>{{api.id}}</span></td>
+            <td><span>{{api.name}}</span></td>
+            <td><span>{{api.ApplicationName}}</span></td>
+            <td><span>{{api.state}}</span></td>
+            <td><button class="btn btn-primary" (click)="openEdit(content,api)">{{api.state == 'stopped'?'Start':'Stop'}}</button>
+            </td>
+              
+
+        </tr>
+        </tbody>
+        </table>
+
+    </div>
+
+
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Instance State</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+             <form [formGroup]="editForm" novalidate>
+                <div class="form-group"> 
+                 <label for="id">Instance Id</label> 
+                 <div class="input-group"> 
+                    <input formControlName="id" class="form-control" readonly> 
+                 </div> 
+               </div>
+                <div class="form-group mt-4">
+                  <label for="action">Change instance state to:</label>
+                  <div class="input-group">
+                    <input formControlName="action" class="form-control" readonly>
+                  </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                     <button data-dismiss="modal" class="btn btn-info" (click)="onSave()" >Proceed</button> 
+                    </div>
+              </form>
+         
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+        </div> -->
+      </ng-template>
+
+
+
+      <ng-template #contentstart let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title1">Instance State</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="editForm" novalidate>
+                <div class="form-group"> 
+                 <label for="id">Instance Id</label> 
+                 <div class="input-group"> 
+                    <input formControlName="id" class="form-control" readonly> 
+                 </div> 
+               </div>
+                <div class="form-group mt-4">
+                  <label for="action">Change instance state to:</label>
+                  <div class="input-group">
+                    <input formControlName="action" class="form-control" readonly>
+                  </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                     <button data-dismiss="modal" class="btn btn-info" (click)="onSave()" >Finalize</button> 
+                    </div>
+              </form>
+         
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+        </div> -->
+      </ng-template>

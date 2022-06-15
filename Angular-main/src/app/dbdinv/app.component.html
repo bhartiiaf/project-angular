@@ -1,0 +1,27 @@
+
+
+
+
+
+
+<ul>
+  <li style="float:left"><a routerLink="/">HOME</a></li>
+  <li style="float:left"><a *ngIf="token" href="#">Main</a></li> -->
+    <!-- <li style="float:left"><a>Static URL</a></li> -->
+   <li style="float:left"><a class="nav-item nav-link" routerLink="/api">EC2 MGMT(LIVE)</a></li> 
+   <li style="float:left"><a class="nav-item nav-link" routerLink="#">EC2 MGMT(TEST)</a></li>    
+   
+    <li style="float:right"><a (click)="login()" *ngIf="!token">ADFS Login</a></li>
+    <li style="float:right"><a (click)="logout()" *ngIf="token">Logout</a></li>
+    <!-- <li><a (click)="showToken()" *ngIf="token">SHOW ACCESS TOKEN</a></li> -->
+  </ul>
+
+
+
+  <div *ngIf="!token">
+    <p style="text-align:center;font-size: 30px">Welcome to the DEFEND F Agency Dashboards (ADB) Inventory</p>
+    <!-- <h3 style="text-align:center;font-size: 40px">Please login via ADFS to continue</h3> -->
+  </div>
+  <!-- <router-outlet *ngIf="token"></router-outlet> -->
+  <router-outlet></router-outlet>
+  <!-- <app-api></app-api>   -->

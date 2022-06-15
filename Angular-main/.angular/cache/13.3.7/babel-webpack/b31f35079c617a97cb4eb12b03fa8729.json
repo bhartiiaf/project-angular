@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: true,\n  apigwUrl: process.env.APIGW_URL,\n  adfsUrl: process.env.ADFS_URL,\n  clientId: process.env.CLIENT_ID\n};","map":null,"metadata":{},"sourceType":"module"}

@@ -1,0 +1,71 @@
+div {
+    font-size: 20px;
+  }
+  .divtd {
+    font-size: 20px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+  table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  }
+  th {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  tr {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  select {
+    text-size: 20px;
+    padding: 4px 8px;
+  }
+  
+  .larger-button {
+    display: block;
+    padding: 12px 12px;
+    text-size: 20px;
+  }
+  
+  .medium-button {
+    display: block;
+    padding: 8px 20px;
+  }
+  
+  .not-editable {
+    background-color: silver;
+  }
+  
+  .del-block {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    background-color: whitesmoke;
+  }
+  
+  .del-block:hover {
+    background-color: silver;
+  }
+  
+  .toggler-text {
+    font-size: 15px;
+    color: blue;
+    padding: 4px;
+    user-select: none;
+  }
+  
