@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -21,21 +22,37 @@ export class Api{
   styleUrls: ['./api.component.css']
 })
 export class ApiComponent implements OnInit {
-
+  url!: string
+  platform!: string | null;
   apis!: Api[]; 
   closeResult!:string;
   api!:Api;
   api1!:Api;
   editForm!: FormGroup;
-
+  
   constructor(
     private httpClient: HttpClient,
     private modalService:NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
     ) { }
     
   ngOnInit(): void {
-    document.getElementById('loader')!.style.display = 'block'
+    document.getElementById('loader')!.style.display = 'block';
+
+    // defining api url as per the environment
+    // this.route.queryParams.subscribe(params => {
+    //   this.platform = params['platform'];
+    // });
+    this.platform = this.route.snapshot.paramMap.get('platform');
+    if(this.platform == 'prod'){
+      this.url = 'https://ywpvbvwhfa.execute-api.us-east-2.amazonaws.com/prod/manage-ec2'
+    }
+    else{
+     this.url = 'https://3d3zn5urxi.execute-api.us-east-2.amazonaws.com/testing/ec2'
+    }
+    console.log(this.url)
+
     this.getApiData();
     this.editForm = this.fb.group({
       id: [''],
@@ -44,12 +61,12 @@ export class ApiComponent implements OnInit {
   }
 
   getApiData(){  
-     this.httpClient.get<any>('https://ywpvbvwhfa.execute-api.us-east-2.amazonaws.com/prod/manage-ec2').subscribe(
+    console.log(this.url)
+     this.httpClient.get<any>(this.url).subscribe(
        response => {
         if (Response) {
           hideloader();
-      }
-         console.log(response);  
+      }  
          this.apis = response;
         }       
      ); 
@@ -76,8 +93,9 @@ export class ApiComponent implements OnInit {
 //start all
 
 startAll(e:any) {
+  console.log(this.url);
   const body = { action: 'start',id: e.target.value};
-    this.httpClient.post<any>('https://ywpvbvwhfa.execute-api.us-east-2.amazonaws.com/prod/manage-ec2', body)
+    this.httpClient.post<any>(this.url, body)
         .subscribe((result) => {
           this.ngOnInit();
         });
@@ -85,8 +103,10 @@ startAll(e:any) {
 }
 
 startAllInstance(){
+  console.log(this.url);
   const body = { action: 'start',id: 'all'};
-    this.httpClient.post<any>('https://ywpvbvwhfa.execute-api.us-east-2.amazonaws.com/prod/manage-ec2', body)
+
+    this.httpClient.post<any>(this.url, body)
         .subscribe((result) => {
           this.ngOnInit();
         });
@@ -94,15 +114,19 @@ startAllInstance(){
 }
 
 stopAll(e:any){
+  console.log(this.url);
   const body = { action: 'stop',id: e.target.value};
-    this.httpClient.post<any>('https://ywpvbvwhfa.execute-api.us-east-2.amazonaws.com/prod/manage-ec2', body)
+  
+    this.httpClient.post<any>(this.url, body)
         .subscribe((result) => {
           this.ngOnInit();
         });
 }
 stopAllInstance(){
+  console.log(this.url);
   const body = { action: 'stop',id: 'all'};
-    this.httpClient.post<any>('https://ywpvbvwhfa.execute-api.us-east-2.amazonaws.com/prod/manage-ec2', body)
+ 
+    this.httpClient.post<any>(this.url, body)
         .subscribe((result) => {
           this.ngOnInit();
         });
@@ -111,6 +135,7 @@ stopAllInstance(){
 
 
 refreshPage(){
+  console.log(this.url);
   this.ngOnInit();
 }
 
@@ -125,8 +150,8 @@ refreshPage(){
 
 
   onSave(){
-    const url = 'https://3d3zn5urxi.execute-api.us-east-2.amazonaws.com/testing/ec2';
-    this.httpClient.post(url,this.editForm.value)    
+    console.log(this.url)
+    this.httpClient.post(this.url,this.editForm.value)    
     .subscribe((result) => {
       this.ngOnInit();
     });

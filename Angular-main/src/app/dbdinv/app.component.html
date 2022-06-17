@@ -8,15 +8,15 @@
   <li style="float:left"><a routerLink="/">HOME</a></li>
   <li style="float:left"><a *ngIf="token" href="#">Main</a></li> -->
     <li style="float:left"><a routerLink="/hotLinks">HOT LINKS</a></li>
-    <li style="float:left">
+    <!-- <li style="float:left">
       <select class="form-select form-select-md w-40 bg-dark text-white">
         <option disabled selected>EC2 MGMT</option>
-        <option value="prod">Prod</option>
+        <option value="prod" routerLink="/api/prod">Prod</option>
         <option value="staging">Satging</option>
       </select>
-    </li> 
-   <li style="float:left"><a class="nav-item nav-link" routerLink="/api">EC2 MGMT(LIVE)</a></li> 
-   <!-- <li style="float:left"><a class="nav-item nav-link" routerLink="#">EC2 MGMT(TEST)</a></li>     -->
+    </li>  -->
+   <li style="float:left"><a class="nav-item nav-link" routerLink="/api/prod">EC2 MGMT(LIVE)</a></li> 
+   <li style="float:left"><a class="nav-item nav-link" routerLink="/api/test">EC2 MGMT(TEST)</a></li>
    
     <li style="float:right"><a (click)="login()" *ngIf="!token">ADFS Login</a></li>
     <li style="float:right"><a (click)="logout()" *ngIf="token">Logout</a></li>

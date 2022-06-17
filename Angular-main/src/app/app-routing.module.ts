@@ -6,7 +6,7 @@ import { DashboardInventory } from "./dbdinv/dbdinv.component";
 import { HotLinksComponent } from "./dbdinv/hot-links/hot-links.component";
 const routes:Routes = [
     // {path:'',component:AppComponent},
-    {path: 'api', component: ApiComponent},
+    {path: 'api/:platform', component: ApiComponent},
     {path: 'hotLinks', component: HotLinksComponent},
     {path:'login', component:DashboardInventory},
 
